@@ -1,0 +1,36 @@
+{% extends "book/base.html" %}
+
+{% load static %}
+
+{% block content %}
+
+    <link rel='stylesheet' href="{% static "book/css/build/bundle.css" %}">
+	<script defer src="{% static "book/js/build/bundle.js" %}"></script>
+    <a id="shop-ref" hidden="true" href="{% url 'shop' %}"></a>
+
+    <div class="breadcrumb">
+        <div class="container">
+            <a class="breadcrumb-item" href="{% url 'home' %}">Home</a>
+            <span class="breadcrumb-item active">Book Update</span>
+        </div>
+    </div>
+
+{#    {% csrf_token %}#}
+<div class="container">
+    {% if book.count > 0 %}
+    <h2>Books catalog:</h2>
+    <table>
+        <thead><th>Id</th><th>Author</th><th>Name</th><th></th></thead>
+        {% for field in book %}
+        <tr>
+            <td>{{ field.id }}</td>
+            <td>{{ field.author }}</td>
+            <td>{{ field.name }}</td>
+            <td><a href="{% url 'book_edit' id=field.id %}">Edit</a> | <a href="{% url 'book_delete' id=field.id %}">Delete</a></td>
+        </tr>
+        {% endfor %}
+    </table>
+    {% endif %}
+</div>
+
+{% endblock %}
